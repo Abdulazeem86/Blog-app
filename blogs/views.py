@@ -4,8 +4,8 @@ from django.shortcuts import render,  redirect
 from django.http import  HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 
-from .models import User
-from .forms import UserForm
+from .models import User, FeedModel
+from .forms import UserForm, FeedForm
 
 # def index(request):
 #     return render(request, "blogs/signup.html")
@@ -83,3 +83,21 @@ def user_login(request):
 
 
 
+def feed_view(request):
+    if request.method == 'POST':
+        print('post method')
+        form = FeedForm(request.POST)
+        if form.is_valid():
+            print('successful post')
+            form.save()  # Save the form data to the database
+            feeds= FeedModel.objects.all()
+            return render(request, 'blogs/home.html', {'feeds': feeds})
+            #return HttpResponseRedirect('/home')  # Redirect to a success page
+    else:
+        form = FeedForm()
+        print('post method failed')
+    return render(request, 'blogs/home.html', {'form': form})
+
+def feeds(request):
+    data = FeedModel.objects.all()
+    return render(request, 'blogs/feeds.html', {'data':data})

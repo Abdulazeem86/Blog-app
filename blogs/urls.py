@@ -6,7 +6,8 @@ app_name = "blogs"
 urlpatterns = [
    
     path('', views.signup, name='signup'),
-    path('home/', views.home, name="home"),
+    path('home/', views.feed_view, name="home"),
     path('login/', views.user_login, name="login"),
+    path('feeds', views.feeds, name="feeds")
    
 ]

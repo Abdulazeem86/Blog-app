@@ -8,7 +8,8 @@ class User(models.Model):
     email = models.EmailField(max_length=255, unique=True)
     phone = models.IntegerField()
 
-class Feed(models.Model):
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
-    feed = models.CharField(max_length=255)
-    posted_at = models.DateTimeField("posted date")
+class FeedModel(models.Model):
+    feed = models.CharField(max_length=100)
+   
+    
+    # Add more fields as needed
