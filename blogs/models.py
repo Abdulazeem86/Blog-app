@@ -12,3 +12,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+
+class Group(models.Model):
+    # Define your Group model
+    pass
+
+class Permission(models.Model):
+    # Define your Permission model
+    pass

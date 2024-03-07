@@ -15,11 +15,14 @@ def home(request):
 
 def signup(request):
     if request.method == 'POST':
+        print('post method')
         form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
+            print('valid form')
             form.save()
             return HttpResponseRedirect('/login') # Redirect to success page after signup
     else:
+        print('method not detected')
         form = SignUpForm()
     return render(request, 'blogs/signup.html', {'form': form})
 
