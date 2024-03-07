@@ -100,4 +100,5 @@ def feed_view(request):
 
 def feeds(request):
     data = FeedModel.objects.all()
-    return render(request, 'blogs/feeds.html', {'data':data})
+    users = User.objects.all()
+    return render(request, 'blogs/feeds.html', {'data':data, 'users':users})
