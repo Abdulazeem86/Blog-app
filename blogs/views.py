@@ -5,7 +5,7 @@ from django.http import  HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 
 from .models import User
-from .forms import UserForm
+from .forms import SignUpForm
 
 # def index(request):
 #     return render(request, "blogs/signup.html")
@@ -15,12 +15,12 @@ def home(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/home') # Redirect to success page after signup
+            return HttpResponseRedirect('/login') # Redirect to success page after signup
     else:
-        form = UserForm()
+        form = SignUpForm()
     return render(request, 'blogs/signup.html', {'form': form})
 
 # def login(request):
