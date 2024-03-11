@@ -6,3 +6,12 @@ class Feed(AbstractUser):
 
 #     def __str__(self):
 #         return self.feed
+
+Superuser:
+Taurz
+Taurz@123
+azeemharys1@gmail.com
+
+user:
+user6
+pass6@678

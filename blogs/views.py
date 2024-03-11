@@ -16,7 +16,7 @@ def home(request):
 def signup(request):
     if request.method == 'POST':
         print('post method')
-        form = SignUpForm(request.POST, request.FILES)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             print('valid form')
             form.save()

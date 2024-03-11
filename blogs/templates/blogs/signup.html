@@ -8,50 +8,64 @@
 
     <style>
         /* Custom CSS styles */
-     
+
 
         .form-heading {
             text-align: center;
             margin-bottom: 20px;
         }
+        .form-container .mb-3 {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-container .mb-3 label {
+            margin-bottom: 5px;
+        }
+        .form-container .mb-3 input {
+            width: 100%;
+        }
+
     </style>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
 
 <body>
-    <div class="container mt-4 col-md-12 col-sm-12">
-        <div class="form-container">
+    <div class="container mt-4 col-md-6 col-sm-12">
+        <div class="form-container form-control">
             <div class="form-heading">
                 <h3>Create an account</h3>
             </div>
-            <form method="post" >
+            <form method="post">
                 {% csrf_token %}
                 <!-- {{ form.as_p }} -->
                 <div class="mb-3 col-md-12">
-                    
-                    
                     {{ form.name.label_tag }}
                     {{ form.name }}
-                    
                 </div>
+
                 <div class="mb-3">
                     {{ form.username.label_tag }}
                     {{ form.username }}
                 </div>
+
                 <div class="mb-3">
-                    {{ form.password.label_tag }}
-                    {{ form.password }}
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
                 </div>
+
                 <div class="mb-3">
-                    {{ form.confirm_password.label_tag }}
-                    {{ form.confirm_password }}
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
                 </div>
+
                 <div class="mb-3">
                     {{ form.email.label_tag }}
                     {{ form.email }}
                 </div>
+
                 <div class="mb-3">
                     {{ form.phone.label_tag }}
                     {{ form.phone }}
@@ -63,7 +77,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
