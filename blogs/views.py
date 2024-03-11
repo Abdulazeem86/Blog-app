@@ -4,19 +4,15 @@ from django.shortcuts import render,  redirect
 from django.http import  HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 
-from .models import User
-from .forms import SignUpForm
+from .models import User, PostModel
+from .forms import SignUpForm, PostForm
 
-# def index(request):
-#     return render(request, "blogs/signup.html")
-
-def home(request):
-    return render(request, "blogs/home.html")
 
 def signup(request):
     if request.method == 'POST':
         print('post method')
         form = SignUpForm(request.POST)
+        
         if form.is_valid():
             print('valid form')
             form.save()
@@ -26,39 +22,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'blogs/signup.html', {'form': form})
 
-# def login(request):
-#     return render(request, "blogs/login.html")
 
-# login method-1
-# def user_login(request):
-#     if request.method == 'POST':
-#         print('post method succeeded')
-#         form = AuthenticationForm(request.POST)
-
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username')
-#             password = form.cleaned_data.get('password')
-#             user = authenticate(username=username, password=password)
-            
-#             print(username)
-#             print(password)
-            
-#             if user is not None:
-#                 login(request, user)
-#                 return HttpResponse("Successful Authentication")
-#                 # return HttpResponseRedirect('/home')  # Redirect to home page after login
-#             else:
-#                 print('Blank user field')
-#                 messages.error(request, 'Invalid username or password.')
-#                 return HttpResponseRedirect('/login')
-#         else:
-#             print('invalid username or password1')
-#             messages.error(request, 'Invalid username or password.')
-#             return HttpResponseRedirect('/login')
-#     else:
-#         form = AuthenticationForm()
-#         # return HttpResponse("Authentication failed")
-#         return render(request, 'blogs/login.html', {'form': form})
         
 # login method-2
 def user_login(request):
@@ -84,5 +48,38 @@ def user_login(request):
         # If it's a GET request, display the login form
         return render(request, 'blogs/login.html',{'form':form}) 
 
+def signin_reqired(fn):
+    def wrapper(request,*args,**kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request,"login plzz!!!!")
+            return redirect("signin")
+        return fn(request,*args,**kwargs)
+    return wrapper
 
 
+# def home(request):
+#     return render(request, "blogs/home.html")
+@signin_reqired
+def feed_input(request):
+    feeds= PostModel.objects.all()
+    if request.method == 'POST':
+        print('post method')
+        form = PostForm(request.POST)
+        if form.is_valid():
+            print('successful post')
+            form.save()  # Save the form data to the database
+            return render(request, 'blogs/home.html', {'feeds': feeds})
+            #return HttpResponseRedirect('/home')  # Redirect to a success page
+    else:
+        form = PostForm()
+        print('post method failed')
+    return render(request, 'blogs/home.html', {'form': form, 'feeds':feeds})
+
+# def feeds(request):
+#     data = FeedModel.objects.all()
+#     users = User.objects.all()
+#     return render(request, 'blogs/feeds.html', {'data':data, 'users':users})
+
+
+# def index(request):
+#     return render(request, "blogs/signup.html")
