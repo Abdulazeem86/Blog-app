@@ -18,6 +18,7 @@ def signup(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
+            
             return HttpResponseRedirect('/login') # Redirect to login page after signup
     else:
         form = UserForm()

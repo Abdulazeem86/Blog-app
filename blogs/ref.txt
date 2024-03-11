@@ -28,3 +28,11 @@
             </div>
         </div>
     </div>
+
+    Superuser:
+    admin
+    admin123
+    admin1986@gmail.com
+
+    user5
+    pass5@123
