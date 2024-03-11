@@ -8,9 +8,12 @@ class Feed(AbstractUser):
 #         return self.feed
 
 Superuser:
-Taurz
-Taurz@123
+taurz
+taurz123
 azeemharys1@gmail.com
+
+admin
+admin123
 
 user:
 user6
