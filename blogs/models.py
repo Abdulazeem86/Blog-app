@@ -10,7 +10,7 @@ class User(AbstractUser):
 
 class PostModel(models.Model):
     feed = models.TextField(max_length=1000)
-    image = models.ImageField(upload_to='post_images', blank=True, null=True)
+    image = models.ImageField(upload_to='', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -42,6 +42,16 @@ class Feed(AbstractUser):
 #         # return HttpResponse("Authentication failed")
 #         return render(request, 'blogs/login.html', {'form': form})
 
+
+wrapper function
+def signin_reqired(fn):
+    def wrapper(request,*args,**kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request,"login plzz!!!!")
+            return redirect("signin")
+        return fn(request,*args,**kwargs)
+    return wrapper
+
 Superuser:
 taurz
 taurz123

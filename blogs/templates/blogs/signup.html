@@ -35,7 +35,7 @@
 </head>
 
 <body>
-    <div class="container mt-4 col-md-6 col-sm-12">
+    <div class="container mt-4 col-12 col-md-6 col-sm-12">
         <div class="form-container form-control">
             <div class="form-heading">
                 <h3>Create an account</h3>
@@ -43,7 +43,7 @@
             <form method="post">
                 {% csrf_token %}
                 <!-- {{ form.as_p }} -->
-                <div class="mb-3 col-md-12">
+                <div class="mb-3">
                     {{ form.name.label_tag }}
                     {{ form.name }}
                 </div>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="but mt-4">
                     <button type="submit" class="btn btn-primary">Signup</button>
-                    <p class="my-auto mx-auto">Registered User?<a href="/login">Login</a></p>
+                    <p class="my-auto ms-auto">Registered User?   <a href="/login">Login</a></p>
                 </div>
             </form>
         </div>

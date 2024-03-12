@@ -48,18 +48,7 @@ def user_login(request):
         # If it's a GET request, display the login form
         return render(request, 'blogs/login.html',{'form':form}) 
 
-def signin_reqired(fn):
-    def wrapper(request,*args,**kwargs):
-        if not request.user.is_authenticated:
-            messages.error(request,"login plzz!!!!")
-            return redirect("signin")
-        return fn(request,*args,**kwargs)
-    return wrapper
 
-
-# def home(request):
-#     return render(request, "blogs/home.html")
-@signin_reqired
 def feed_input(request):
     feeds= PostModel.objects.all()
     if request.method == 'POST':
