@@ -52,6 +52,12 @@ def signin_reqired(fn):
         return fn(request,*args,**kwargs)
     return wrapper
 
+
+def feed(request):
+    text = FeedModel.objects.all()
+    context = {"text": text}
+    return render(request, "blogs/feed.html", context)
+
 Superuser:
 taurz
 taurz123

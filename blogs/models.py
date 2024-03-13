@@ -15,6 +15,12 @@ class PostModel(models.Model):
 
     def __str__(self):
         return f'Post #{self.id}'
+    
+class FeedModel(models.Model):
+    text = models.TextField(max_length=255)
+
+    def __str__(self):
+        return self.text
 
 class Group(models.Model):
     # Define your Group model
