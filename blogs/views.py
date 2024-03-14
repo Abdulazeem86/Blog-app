@@ -1,31 +1,50 @@
 from typing import Any
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, get_user_model
 from django.db.models.query import QuerySet
-from django.shortcuts import render,  redirect
+from django.forms.models import BaseModelForm
+from django.shortcuts import render
 from django.http import  HttpResponseRedirect, HttpResponse
 from django.contrib import messages
-from django.urls import reverse
 from django.views import generic
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
-from .models import User, PostModel, FeedModel
+from .models import PostModel, FeedModel
 from .forms import SignUpForm, PostForm
 
 
-def signup(request):
-    if request.method == 'POST':
-        print('post method')
-        form = SignUpForm(request.POST)
+# def signup(request):
+#     if request.method == 'POST':
+#         print('post method')
+#         form = SignUpForm(request.POST)
         
-        if form.is_valid():
-            print('valid form')
-            form.save()
-            return HttpResponseRedirect('/login') # Redirect to success page after signup
-    else:
-        print('method not detected')
-        form = SignUpForm()
-    return render(request, 'blogs/signup.html', {'form': form})
+#         if form.is_valid():
+#             print('valid form')
+#             form.save()
+#             return HttpResponseRedirect('/login') # Redirect to success page after signup
+#     else:
+#         print('method not detected')
+#         form = SignUpForm()
+#     return render(request, 'blogs/signup.html', {'form': form})
 
+
+
+
+# #Generic signup
+class SignUpView(CreateView):
+    model=get_user_model
+    template_name="blogs/signup.html"
+    form_class=SignUpForm
+    success_url=reverse_lazy("blogs:login")
+
+    def form_valid(self, form):
+        messages.success(self.request,"account has been created")
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.error(self.request,"failed to create account")
+        return super().form_invalid(form)
 
         
 # login method-2
@@ -53,6 +72,8 @@ def user_login(request):
         return render(request, 'blogs/login.html',{'form':form}) 
 
 
+
+
 def feed_input(request):
     feeds= PostModel.objects.all()
     if request.method == 'POST':
@@ -60,14 +81,17 @@ def feed_input(request):
         form = PostForm(request.POST)
         if form.is_valid():
             print('successful post')
-            form.save()  # Save the form data to the database
+            form.save()  
             return render(request, 'blogs/home.html', {'feeds': feeds})
-            #return HttpResponseRedirect('/home')  # Redirect to a success page
     else:
         form = PostForm()
         print('post method failed')
     print("render method called")
     return render(request, 'blogs/home.html', {'form': form, 'feeds':feeds})
+
+
+
+
 
 
 class FeedView(generic.ListView):
@@ -76,6 +100,55 @@ class FeedView(generic.ListView):
 
     def get_queryset(self):
         return FeedModel.objects.all()
+    
+
+
+
+
+class FeedInputView(CreateView):
+    model = PostModel
+    form_class = PostForm
+    template_name = 'blogs/homegeneric.html'
+    success_url = reverse_lazy('blogs:homegeneric') 
+
+    def form_valid(self, form):
+        print('successful post')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print('post method failed')
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs): #Here in the context method works without **kwargs but added as an optional input for future needs)
+        context = super().get_context_data(**kwargs) 
+        context['feeds'] = PostModel.objects.all().order_by('created_at')[::-1]
+        return context
+    
+    
+
+
+# class Feed_inputView(generic.CreateView, generic.ListView):
+#     model=PostModel
+#     form_class=PostForm
+#     template_name= "blogs/homegeneric.html"
+#     context_object_name = "feeds"
+
+#     def get_queryset(self):
+#         return PostModel.objects.all()
+    
+#     def form_valid(self, form):
+#         return super().form_valid(form)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['form'] = self.get_form()
+    #     return context
+
+
+
+
+
+
 
 
     
@@ -99,3 +172,4 @@ class FeedView(generic.ListView):
 
 # def index(request):
 #     return render(request, "blogs/signup.html")
+    
