@@ -6,12 +6,12 @@ from django.forms.models import BaseModelForm
 from django.shortcuts import render
 from django.http import  HttpResponseRedirect, HttpResponse
 from django.contrib import messages
-from django.views import generic
-from django.views.generic import CreateView
+
+from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse_lazy
 
-from .models import PostModel, FeedModel
-from .forms import SignUpForm, PostForm
+from .models import PostModel, FeedModel, ProductModel
+from .forms import SignUpForm, PostForm, ProductsForm
 
 
 # def signup(request):
@@ -94,7 +94,7 @@ def feed_input(request):
 
 
 
-class FeedView(generic.ListView):
+class FeedView(ListView):
     template_name= "blogs/feed.html"
     context_object_name = "text"
 
@@ -127,7 +127,27 @@ class FeedInputView(CreateView):
     
 
 
-# class Feed_inputView(generic.CreateView, generic.ListView):
+class ProductView(CreateView,ListView):
+    template_name= "blogs/products.html"
+    context_object_name='products'
+    model=ProductModel
+    form_class=ProductsForm
+    success_url=reverse_lazy('blogs:products')
+
+    def form_valid(self, form):
+        print('successful post')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print('post method failed')
+        return super().form_invalid(form)
+
+    def get_queryset(self):
+        return ProductModel.objects.all()
+
+
+
+#class Feed_inputView(CreateView, ListView):
 #     model=PostModel
 #     form_class=PostForm
 #     template_name= "blogs/homegeneric.html"
@@ -143,8 +163,6 @@ class FeedInputView(CreateView):
     #     context = super().get_context_data(**kwargs)
     #     context['form'] = self.get_form()
     #     return context
-
-
 
 
 

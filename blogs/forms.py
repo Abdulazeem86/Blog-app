@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, PostModel
+from .models import User, PostModel, ProductModel
 
 
 class SignUpForm(UserCreationForm):
@@ -13,3 +13,8 @@ class PostForm(forms.ModelForm):
     class Meta:
         model=PostModel
         fields = ['feed','image']
+
+class ProductsForm(forms.ModelForm):
+    class Meta:
+        model= ProductModel
+        fields=['prodname','category','price','image','stock','availability']
