@@ -1,7 +1,16 @@
-li {
-    color: red;
+.form-container{
+    background:linear-gradient(rgb(240, 240, 231),rgb(247, 248, 242))
+}
+.loginbtn{
+    opacity: 70%;
+    width: 100%;
+   }
+
+.buttoncont{
+    display: flex;
+    flex-direction: column;
 }
 
-body {
-    background: aquamarine;
+.logintitle{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }

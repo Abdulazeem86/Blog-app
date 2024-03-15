@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -11,5 +13,4 @@ urlpatterns = [
     path('feed/',views.FeedView.as_view(), name='feed'),
     path('homegeneric/', views.FeedInputView.as_view(), name='homegeneric'),
     path('products/', views.ProductView.as_view(), name='products')
-   
-]
+   ]

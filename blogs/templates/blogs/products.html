@@ -46,7 +46,7 @@
             <div class="form-heading">
                 <h3>Add a product</h3>
             </div>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- {{ form.as_p }} -->
                 <div class="mb-3">
@@ -80,7 +80,7 @@
                 </div>
                 <div class="but mt-4">
                     <button type="submit" class="btn btn-primary">Add Product</button>
-                    
+
                 </div>
             </form>
         </div>
@@ -88,15 +88,24 @@
             {% if products %}
             {% for x in products %}
             <div class="card" style="width: 18rem;">
-                
-                <img src='/blogproject/productpics/default.jpg' class="card-img-top" alt="...">
+
+                <img src="{{x.image.url}}" class="card-img-top" alt="img">
+
+
+                <!-- {% if x.image %}
+                <img src="{{ x.image.url }}" alt="{{ x.prodname }}">
+                {% else %}
+                <img src="{{x.image.url}}" alt="{{ x.prodname }}">
+                {% endif %} -->
+
+
                 <div class="card-body">
-                  <h5 class="card-title">{{x.prodname}}</h5>
-                  <p class="card-text">{{x.category}}</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">{{x.prodname}}</h5>
+                    <p class="card-text">{{x.category}}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
-              </div>
-              {% endfor %}
+            </div>
+            {% endfor %}
             <!-- <ul>
                 {% for x in products %}
                 <li>{{ x.prodname }}</li>
@@ -106,7 +115,7 @@
             {% else %}
             <p>No products available.</p>
             {% endif %}
-    
+
         </div>
 
     </div>
