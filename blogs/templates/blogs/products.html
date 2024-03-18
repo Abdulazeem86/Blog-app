@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    {% if is_admin %}
+                    {% if request.user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/addproduct/">Add Product</a>
                     </li>
@@ -38,10 +38,10 @@
     </nav>
 
     <div class="text-center">
-        {% if is_admin %}
+        {% if request.user.is_staff %}
         <p>Welcome, admin!</p>
         {% else %}
-        <p>Welcome, regular user!</p>
+        <p>Welcome, regular user! </p>
         {% endif %}
     </div>
 
