@@ -3,8 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, get_user_model
 from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
-from django.shortcuts import render
-from django.http import  HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 
 from django.views.generic import CreateView, ListView, DetailView
@@ -12,23 +12,6 @@ from django.urls import reverse_lazy
 
 from .models import PostModel, FeedModel, ProductModel
 from .forms import SignUpForm, PostForm, ProductsForm
-
-
-# def signup(request):
-#     if request.method == 'POST':
-#         print('post method')
-#         form = SignUpForm(request.POST)
-        
-#         if form.is_valid():
-#             print('valid form')
-#             form.save()
-#             return HttpResponseRedirect('/login') # Redirect to success page after signup
-#     else:
-#         print('method not detected')
-#         form = SignUpForm()
-#     return render(request, 'blogs/signup.html', {'form': form})
-
-
 
 
 # #Generic signup
@@ -60,7 +43,14 @@ def user_login(request):
         if user is not None:
             login(request, user)
             print('user not none')
-            return HttpResponseRedirect('/feed')
+            is_admin=request.user.is_staff
+            print(is_admin)
+            return redirect('/products/?is_admin={}'.format(is_admin))
+
+            # return render(request, 'blogs/products.html',{'is_admin':is_admin})
+            # return redirect('/products/?is_admin={}'.format(is_admin))
+            # return reverse_lazy(redirect ('products/', {'is_admin':is_admin}))
+            # return HttpResponseRedirect('/products/')
         else:
             print('user none')
             messages.error(request, 'Invalid username or password.')
@@ -70,6 +60,63 @@ def user_login(request):
         form = AuthenticationForm()
         # If it's a GET request, display the login form
         return render(request, 'blogs/login.html',{'form':form}) 
+
+
+# class ProductView(ListView):
+#     model=ProductModel
+#     template_name= "blogs/products.html"
+#     context_object_name='products'
+
+# def prodView(request):
+#         is_admin = request.GET.get('is_admin')
+#         print(is_admin)
+#         # Pass the is_admin value to the HTML template
+#         return render(request, 'blogs/products.html', {'is_admin': is_admin})
+
+
+
+class ProductView(ListView):
+    model=ProductModel
+    template_name= "blogs/products.html"
+    context_object_name='products'
+
+    # def prodView(request):
+    #     is_admin=request.GET.get('is_admin')
+
+    def get_context_data(self,**kwargs):
+        is_admin=self.request.GET.get('is_admin')
+        context = super().get_context_data(**kwargs)
+        context['is_admin']= is_admin
+        context['products'] = ProductModel.objects.all()
+        print(is_admin)
+        
+        return context
+    
+    
+# class ProductView(ListView):
+#     template_name= "blogs/products.html"
+#     context_object_name='products'
+
+#     def get_queryset(self):
+#         return ProductModel.objects.all()
+    
+
+
+class Addprodview(CreateView):
+    template_name= "blogs/addproduct.html"
+    context_object_name='products'
+    model=ProductModel
+    form_class=ProductsForm
+    success_url=reverse_lazy('blogs:products')
+
+    def form_valid(self, form):
+        print('successful post')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print('post method failed')
+        return super().form_invalid(form)
+
 
 
 
@@ -88,7 +135,6 @@ def feed_input(request):
         print('post method failed')
     print("render method called")
     return render(request, 'blogs/home.html', {'form': form, 'feeds':feeds})
-
 
 
 
@@ -127,23 +173,14 @@ class FeedInputView(CreateView):
     
 
 
-class ProductView(CreateView,ListView):
-    template_name= "blogs/products.html"
-    context_object_name='products'
-    model=ProductModel
-    form_class=ProductsForm
-    success_url=reverse_lazy('blogs:products')
 
-    def form_valid(self, form):
-        print('successful post')
-        return super().form_valid(form)
+    
 
-    def form_invalid(self, form):
-        print('post method failed')
-        return super().form_invalid(form)
 
-    def get_queryset(self):
-        return ProductModel.objects.all()
+
+
+
+    
 
 
 
@@ -190,4 +227,75 @@ class ProductView(CreateView,ListView):
 
 # def index(request):
 #     return render(request, "blogs/signup.html")
+    
+
+# def signup(request):
+#     if request.method == 'POST':
+#         print('post method')
+#         form = SignUpForm(request.POST)
+        
+#         if form.is_valid():
+#             print('valid form')
+#             form.save()
+#             return HttpResponseRedirect('/login') # Redirect to success page after signup
+#     else:
+#         print('method not detected')
+#         form = SignUpForm()
+#     return render(request, 'blogs/signup.html', {'form': form})
+    
+
+
+
+    # class ProductView(ListView):
+#     template_name= "blogs/products.html"
+#     context_object_name='products'
+    
+#     def get_queryset(request,self,*args, **kwargs):
+#         is_admin=self.user.is_staff
+#         return render(request,self.template_name,{'is_admin':is_admin})
+
+
+
+#With the following code, on successful login redirects to /products/ url but "is_admin" value (context)-
+    #is not passed to conditionally render products page with "Add Product" button for admin
+# # login method-2
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+        
+#         user = authenticate(request, username=username, password=password)
+#         print(username)
+#         print(password)
+        
+#         if user is not None:
+#             login(request, user)
+#             print('user not none')
+#             is_admin=request.user.is_staff
+#             return HttpResponseRedirect('/products/')
+        
+#             # return reverse_lazy(redirect ('products/', {'is_admin':is_admin}))
+#             # return HttpResponseRedirect('/products/')
+#         else:
+#             print('user none')
+#             messages.error(request, 'Invalid username or password.')
+#             return HttpResponseRedirect('/login')
+#     else:
+#         print('back to the start')
+#         form = AuthenticationForm()
+#         # If it's a GET request, display the login form
+#         return render(request, 'blogs/login.html',{'form':form}) 
+    
+
+#This product view also need to be modified as above to get the context data ("is_admin") to conditionally render products page with "Add Product button"
+# class ProductView(ListView):
+#     model=ProductModel
+#     template_name= "blogs/products.html"
+#     context_object_name='products'
+
+#     def get_context_data(self,**kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         context['is_admin']='is_admin'
+#         return 
     

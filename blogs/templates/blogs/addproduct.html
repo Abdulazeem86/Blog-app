@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Signup</title>
+    <title>Products</title>
 
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"> -->
 
@@ -44,47 +44,47 @@
     <div class="container mt-4 col-12 col-md-6 col-sm-12">
         <div class="form-container form-control">
             <div class="form-heading">
-                <h3>Create an account</h3>
+                <h3>Add a product</h3>
             </div>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- {{ form.as_p }} -->
                 <div class="mb-3">
-                    {{ form.name.label_tag }}
-                    {{ form.name }}
+                    {{ form.prodname.label_tag }}
+                    {{ form.prodname }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form.username.label_tag }}
-                    {{ form.username }}
+                    {{ form.category.label_tag }}
+                    {{ form.category }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form.password1.label_tag }}
-                    {{ form.password1 }}
+                    {{ form.price.label_tag }}
+                    {{ form.price }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form.password2.label_tag }}
-                    {{ form.password2 }}
+                    {{ form.image.label_tag }}
+                    {{ form.image }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
+                    {{ form.stock.label_tag }}
+                    {{ form.stock }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form.phone.label_tag }}
-                    {{ form.phone }}
+                    {{ form.availability.label_tag }}
+                    {{ form.availability }}
                 </div>
                 <div class="but mt-4">
-                    <button type="submit" class="btn btn-primary">Signup</button>
-                    <p class="my-auto ms-auto">Registered User? <a href="/login/">Login</a></p>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+
                 </div>
             </form>
         </div>
-
+        
 
     </div>
 

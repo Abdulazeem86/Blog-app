@@ -7,17 +7,19 @@
         margin-bottom: 20px;
     }
 
-    .form-container .mb-3 {
+    .form-container1 .mb-3 {
         display: flex;
         flex-direction: column;
     }
 
-    .form-container .mb-3 label {
+    .form-container1 .mb-3 label {
         margin-bottom: 5px;
     }
 
-    .form-container .mb-3 input {
+    .input-group {
         width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 </style>
 
@@ -37,38 +39,52 @@
 
 <body>
 
-    <div class="container col-md-4 col-sm-12 mt-4 d-flex justify-content-center align-items-center vh-100">
-        <div class="form-container row col-md-12 form-control loginform pt-4 pb-4">
+    <div class="container col-md-8 mt-4 d-flex justify-content-center align-items-center min-vh-100">
 
-            <div class="form-heading">
-                <h2 class="logintitle">Login</h2>
-            </div>
-            <div>
-                <form method="post">
-                    {% csrf_token %}
+        <div class="row  rounded-5 p-3 bg-white shadow box-area">
 
-                    <div class="mb-3">
-                        {{ form.username.label_tag }}
-                        {{ form.username }}
-                    </div>
-                    <div class="mb-3">
-                        {{ form.password.label_tag }}
-                        {{ form.password }}
-                    </div>
-
-                    <div class="mt-4 d-flex buttoncont text-center">
-                        <div class="mb-4">
-                            <button type="submit" class="btn btn-primary align-items-center loginbtn">Login</button>
-                        </div>
-                        <div class="my-auto ">
-                            <p class="my-auto">New User? <a href="/">Signup</a></p>
-                        </div>
-                    </div>
-                    <!-- {{ form.as_p }} -->
-
-                </form>
+            <div class="col-md-6 left-box rounded-4 justify-content-center align-items-center d-flex flex-column">
+                <div class="featured_image mb-3">
+                    <img src="{% static 'blogs/images/login_image.jpg'%}" alt="login-image" style="width:250px">
+                </div>
+                <p>Be verified</p>
+                <small class="text-wrap text-center" style="width:17rem">Log in to view the wide range of collections..</small>
             </div>
 
+
+            <div class="col-md-6 rounded-5 justify-content-center align-items-center loginform pt-4 pb-4">
+                <div class="row form-container1 form-control align-items-center">
+                <div class="form-heading">
+                    <h2 class="logintitle">Login</h2>
+                </div>
+                <div class="input-group">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.password.label_tag }}
+                            {{ form.password }}
+                        </div>
+
+                        <div class="mt-4 d-flex flex-column text-center">
+                            <div class="mb-4">
+                                <button type="submit" class="btn btn-primary align-items-center loginbtn">Login</button>
+                            </div>
+                            <div class="my-auto text-center">
+                                <p >New User? <a href="/">Signup</a></p>
+                            </div>
+                        </div>
+                       
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
         </div>
     </div>
 
