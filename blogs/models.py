@@ -33,8 +33,21 @@ class ProductModel(models.Model):
 
     def __str__(self):
         return self.prodname
-   
+    
+class CategoryModel(models.Model):
+    category=models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    choice_text=models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.choice_text
+   
+class ItemModel(models.Model):
+    itemname= models.CharField(max_length=100)
+    itemprice= models.IntegerField(max_length=20)
+
+    def __str__(self):
+        return self.itemname
+    
 
 class Group(models.Model):
     # Define your Group model
