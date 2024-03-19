@@ -41,11 +41,9 @@ def user_login(request):
         print(password)
         
         if user is not None:
-            login(request, user)
+            login(request,user)
             print('user not none')
-            is_admin=request.user.is_staff
-            print(is_admin)
-            return redirect('/products/?is_admin={}'.format(is_admin))
+            return HttpResponseRedirect('/products/')
 
             # return render(request, 'blogs/products.html',{'is_admin':is_admin})
             # return redirect('/products/?is_admin={}'.format(is_admin))
@@ -62,6 +60,15 @@ def user_login(request):
         return render(request, 'blogs/login.html',{'form':form}) 
 
 
+class ProductView(ListView):
+    template_name= "blogs/products.html"
+    context_object_name='products'
+
+    def get_queryset(self):
+        return ProductModel.objects.all()
+    
+
+
 # class ProductView(ListView):
 #     model=ProductModel
 #     template_name= "blogs/products.html"
@@ -75,34 +82,26 @@ def user_login(request):
 
 
 
-class ProductView(ListView):
-    model=ProductModel
-    template_name= "blogs/products.html"
-    context_object_name='products'
-
-    # def prodView(request):
-    #     is_admin=request.GET.get('is_admin')
-
-    def get_context_data(self,**kwargs):
-        is_admin=self.request.GET.get('is_admin')
-        context = super().get_context_data(**kwargs)
-        context['is_admin']= is_admin
-        context['products'] = ProductModel.objects.all()
-        print(is_admin)
-        
-        return context
-    
-    
-
-
-
-    
 # class ProductView(ListView):
+#     model=ProductModel
 #     template_name= "blogs/products.html"
 #     context_object_name='products'
 
-#     def get_queryset(self):
-#         return ProductModel.objects.all()
+#     # def prodView(request):
+#     #     is_admin=request.GET.get('is_admin')
+
+#     def get_context_data(self,**kwargs):
+       
+#         context = super().get_context_data(**kwargs)
+#         # context['is_admin']= is_admin
+#         context['products'] = ProductModel.objects.all()
+#         # print(is_admin)
+        
+#         return context
+    
+    
+    
+
     
 
 

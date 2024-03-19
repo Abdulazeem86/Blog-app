@@ -33,7 +33,7 @@ class ProductModel(models.Model):
 
     def __str__(self):
         return self.prodname
-    
+   
 
 
 class Group(models.Model):
