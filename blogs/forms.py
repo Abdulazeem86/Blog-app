@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, PostModel, ProductModel, ItemModel, CategoryModel
+from .models import User, PostModel, ProductModel, CategoryModel
 
 
 class SignUpForm(UserCreationForm):
@@ -18,11 +18,6 @@ class ProductsForm(forms.ModelForm):
     class Meta:
         model= ProductModel
         fields=['prodname','category','price','image','stock','availability']
-
-class ItemForm(forms.ModelForm):
-    class Meta:
-        model=ItemModel
-        fields= ['itemname','itemprice']
 
 class CategoryForm(forms.ModelForm):
     class Meta:

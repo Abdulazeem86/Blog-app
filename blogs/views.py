@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse_lazy
 
-from .models import PostModel, FeedModel, ProductModel
+from .models import PostModel, FeedModel, ProductModel, CategoryModel
 from .forms import SignUpForm, PostForm, ProductsForm
 
 
@@ -60,14 +60,24 @@ def user_login(request):
         return render(request, 'blogs/login.html',{'form':form}) 
 
 
-class ProductView(ListView):
-    template_name= "blogs/products.html"
-    context_object_name='products'
+# class ProductView(ListView):
+#     template_name= "blogs/products.html"
+#     context_object_name='products'
 
-    def get_queryset(self):
-        return ProductModel.objects.all()
+#     def get_queryset(self):
+#         return ProductModel.objects.all()
     
+def product_list_by_category(request):
+    categories = CategoryModel.objects.all()
+    print(categories)
+    category_product_map = {}
 
+    for category in categories:
+        products = ProductModel.objects.filter(category=category)
+        print(products)
+        category_product_map[category] = products
+
+    return render(request, 'blogs/products.html', {'category_product_map': category_product_map})
 
 # class ProductView(ListView):
 #     model=ProductModel
