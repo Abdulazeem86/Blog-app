@@ -120,11 +120,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+<<<<<<< HEAD
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+=======
+AUTH_USER_MODEL = 'blogs.User'
+
+
+>>>>>>> 95c9c8ac83479ad1747c6d8bacb3a1154c4ceaa1
