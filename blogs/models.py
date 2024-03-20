@@ -50,12 +50,3 @@ class FeedModel(models.Model):
     def __str__(self):
         return self.text
     
-
-
-class Group(models.Model):
-    # Define your Group model
-    pass
-
-class Permission(models.Model):
-    # Define your Permission model
-    pass

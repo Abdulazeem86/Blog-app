@@ -58,6 +58,15 @@ def feed(request):
     context = {"text": text}
     return render(request, "blogs/feed.html", context)
 
+Given for reverse accessor issue
+# class Group(models.Model):
+#     # Define your Group model
+#     pass
+
+# class Permission(models.Model):
+#     # Define your Permission model
+#     pass
+
 Superuser:
 taurz
 taurz123
